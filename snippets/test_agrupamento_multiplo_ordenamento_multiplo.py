@@ -51,22 +51,26 @@ df_procoabo_2.show()
 df_procoabo_2.show()
 grupo = ["state", "department", "gender"]
 w = Window.partitionBy(grupo).orderBy(f.col("initdate").asc(), f.col("enddate").asc())
-df_procoabo_2.withColumn("initdate", f.max("initdate").over(w)).withColumn("enddate", f.max("enddate").over(w)).withColumn("row", f.row_number().over(w)).filter(f.col("row") == 1).show()
+df_procoabo_2.withColumn(
+    "initdate", f.max("initdate").over(w)
+).withColumn("enddate", f.max("enddate").over(w)).withColumn(
+    "row", f.row_number().over(w)).filter(f.col("row") == 1).drop("row").show()
 """"
-+---+---------+---------+---------+-----+----------+--------+--------+------+-----------+------------+---+
-| id|   salary|firstname| lastname|state|department|initdate| enddate|gender|     county| expenditure|row|
-+---+---------+---------+---------+-----+----------+--------+--------+------+-----------+------------+---+
-|  7|326587417|      Joe|  Stevens|   MG|        FI|20103110|20230124|     M|San Joaquin| 5253.331055|  1|
-| 12|654873219|   Zacary|    Efron|   CD|        FA|20103116|20230127|     M|     Fresno| 5447.345215|  1|
-| 11|631231482|    David|    Smith|   CA|        FE|20103116|20230124|     M|     Merced| 4547.692383|  1|
-|  9|332569843|   George| ODonnell|   PR|        FA|20103116|20230127|     F|     Fresno|  5355.54834|  1|
-|  4|123234873|      _89|   Rogers|   CC|        FE|20104110|20230124|     M|      Butte| 7101.831055|  1|
-| 22|578975482|    Pedro|   Sanson|   SC|        FA|20090106|20230122|     M| Sacramento|5872.5898722|  1|
-|  1|123234878|    _\ddd|   Rogers|   CC|        FI|20103110|20230124|     M|    Alameda| 6384.911133|  1|
-| 15|845657246|    Kumar|    Swamy|   CA|        FI|20103110|20230129|     F|     Tulare| 5621.456055|  1|
-|  2|123234872|   _\d89e|   Rogers|   CA|        FA|20103111|20230125|     M|      Butte| 5099.380859|  1|
-| 17|897123057| Joaquina|  Carlota|   SC|        FA|20090106|20230125|     F| Sacramento|5872.5898722|  1|
-|  8|332154719|Mary-Anne|   Foster|   SE|        FE|20103115|20230129|     F|       Kern| 4565.746094|  1|
-| 13|745685214|     Eric|Goldsmith|   CC|        FA|20103110|20230124|     M|     Tulare| 6567.149414|  1|
-+---+---------+---------+---------+-----+----------+--------+--------+------+-----------+------------+---+
++---+---------+---------+---------+-----+----------+--------+--------+------+-----------+------------+
+| id|   salary|firstname| lastname|state|department|initdate| enddate|gender|     county| expenditure|
++---+---------+---------+---------+-----+----------+--------+--------+------+-----------+------------+
+|  7|326587417|      Joe|  Stevens|   MG|        FI|20103110|20230124|     M|San Joaquin| 5253.331055|
+| 12|654873219|   Zacary|    Efron|   CD|        FA|20103116|20230127|     M|     Fresno| 5447.345215|
+| 11|631231482|    David|    Smith|   CA|        FE|20103116|20230124|     M|     Merced| 4547.692383|
+|  9|332569843|   George| ODonnell|   PR|        FA|20103116|20230127|     F|     Fresno|  5355.54834|
+|  4|123234873|      _89|   Rogers|   CC|        FE|20104110|20230124|     M|      Butte| 7101.831055|
+| 22|578975482|    Pedro|   Sanson|   SC|        FA|20090106|20230122|     M| Sacramento|5872.5898722|
+|  1|123234878|    _\ddd|   Rogers|   CC|        FI|20103110|20230124|     M|    Alameda| 6384.911133|
+| 15|845657246|    Kumar|    Swamy|   CA|        FI|20103110|20230129|     F|     Tulare| 5621.456055|
+|  2|123234872|   _\d89e|   Rogers|   CA|        FA|20103111|20230125|     M|      Butte| 5099.380859|
+| 17|897123057| Joaquina|  Carlota|   SC|        FA|20090106|20230125|     F| Sacramento|5872.5898722|
+|  8|332154719|Mary-Anne|   Foster|   SE|        FE|20103115|20230129|     F|       Kern| 4565.746094|
+| 13|745685214|     Eric|Goldsmith|   CC|        FA|20103110|20230124|     M|     Tulare| 6567.149414|
++---+---------+---------+---------+-----+----------+--------+--------+------+-----------+------------+
+
 """
